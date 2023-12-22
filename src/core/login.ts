@@ -28,10 +28,12 @@ export class Login {
   private setRequestHeaders({ cookies }: { cookies: AuthCookies }): void {
     const cookieStr = reduce(cookies, (res, v, k) => `${res}${k}="${v}"; `, '');
 
+    console.log("cookieStr", cookieStr)
+
     this.client.request.setHeaders({
       ...requestHeaders,
       cookie: cookieStr,
-      'csrf-token': cookies.JSESSIONID!,
+      'csrf-token': cookies.JSESSIONID!.replaceAll('"', ''),
     });
   }
 
